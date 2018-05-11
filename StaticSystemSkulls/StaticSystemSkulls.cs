@@ -81,52 +81,8 @@ namespace StaticSystemSkulls
         }
     }
 
-    //[HarmonyPatch(typeof(BattleTech.UI.SGSystemViewPopulator), "UpdateRoutedSystem")]
-    //public static class BattleTech_UI_SGSystemViewPopulator_Patch
-    //{
-    //    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-    //    {
-    //        // before: int normalizedDifficulty = Mathf.Clamp(Mathf.RoundToInt((float)this.starSystem.Def.Difficulty + this.simState.GlobalDifficulty), 1, 10);
-    //        // after:  int normalizedDifficulty = Mathf.Clamp(Mathf.RoundToInt((float)this.starSystem.Def.Difficulty * 2f), 1, 10);
-
-    //        // we'll do this by finding the call to this.simState.GlobalDifficulty and replace the opcodes
-    //        // this is near the end of the function, so we'll start at the end and work backwards
-    //        StaticSystemSkulls.Log("Patching UpdateRoutedSystem...");
-    //        var codes = new List<CodeInstruction>(instructions);
-    //        StaticSystemSkulls.Log(" - found " + instructions.Count() + " instructions");
-    //        for (int idx = codes.Count - 1; idx >= 0; idx--)
-    //        {
-
-    //            // ignore ops that don't look like a function call
-    //            if (codes[idx].operand == null || codes[idx].opcode != OpCodes.Callvirt)
-    //            {
-    //                continue;
-    //            }
-
-    //            string strOperand = (codes[idx].operand as MethodInfo)?.Name;
-    //            if (strOperand.IndexOf("get_GlobalDifficulty") >= 0)
-    //            {
-    //                StaticSystemSkulls.Log(" - patching normalizedDifficulty calculation...");
-    //                // remove the loading of this.simState
-    //                codes[idx - 2].opcode = OpCodes.Nop;
-    //                codes[idx - 1].opcode = OpCodes.Nop;
-
-    //                // replace the call to GlobalDifficulty with a 2f
-    //                codes[idx].opcode = OpCodes.Ldc_R4;
-    //                codes[idx].operand = 2f;
-
-    //                // replace the addition with a multiplication
-    //                codes[idx + 1].opcode = OpCodes.Mul;
-    //                StaticSystemSkulls.Log(" - done!");
-    //                break;
-    //            }
-    //        }
-    //        return codes.AsEnumerable();
-    //    }
-    //}
-
     [HarmonyPatch(typeof(BattleTech.UI.SGSystemViewPopulator), "UpdateRoutedSystem")]
-    public static class BattleTech_UI_SGSystemViewPopulator_Patch2
+    public static class BattleTech_UI_SGSystemViewPopulator_Patch
     {
         private static void Postfix(BattleTech.UI.SGSystemViewPopulator __instance)
         {

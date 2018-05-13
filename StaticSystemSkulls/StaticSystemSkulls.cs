@@ -5,12 +5,13 @@ using Harmony;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using HBS.Logging;
 
 namespace StaticSystemSkulls
 {
     public class StaticSystemSkulls
     {
-        public static List<string> m_consumedMilestones = new List<string>();
+        private static ILog m_log = HBS.Logging.Logger.GetLogger(typeof(StaticSystemSkulls).Name, LogLevel.Log);
 
         public static void Init()
         {
@@ -20,7 +21,7 @@ namespace StaticSystemSkulls
 
         public static void Log(string message)
         {
-            Debug.Log(string.Format("{0}:  {1}", typeof(StaticSystemSkulls).Name, message));
+            m_log.Log(message);
         }
     }
 
